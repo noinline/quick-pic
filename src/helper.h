@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <stdexcept>
 #include <string>
 
@@ -33,10 +34,6 @@ void
 assert(T &&assertion, const char *file = __FILE__, int line = __LINE__,
        std::string msg = {})
 {
-  try {
-    assertCheck<T>(std::forward<T>(assertion), file, line, msg);
-  } catch (const std::exception &e) {
-    throw std::runtime_error(e.what());
-  }
+  assertCheck<T>(std::forward<T>(assertion), file, line, msg);
 }
 } // namespace helper

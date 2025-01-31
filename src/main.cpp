@@ -3,21 +3,20 @@
 int
 main(void)
 {
-  Image     sdl;
+  Image     image;
+  Renderer *renderer = image.getRenderer();
+  Texture  *texture = image.getTexture();
   SDL_Event event;
-  bool      shouldQuit = false;
 
-  while (!shouldQuit) {
+  bool shouldQuit = false;
+  do {
     while (SDL_PollEvent(&event))
       if (event.type == SDL_QUIT)
         shouldQuit = true;
 
-    SDL_RenderClear(sdl.getRenderer());
-    SDL_RenderCopy(sdl.getRenderer(), sdl.getTexture(), NULL, NULL);
-    SDL_RenderPresent(sdl.getRenderer());
-  }
-
-  sdl.cleanupResources();
+    SDL_RenderCopy(renderer->get(), texture->get(), NULL, NULL);
+    SDL_RenderPresent(renderer->get());
+  } while (!shouldQuit);
 
   return 0;
 }

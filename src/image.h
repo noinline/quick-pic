@@ -1,29 +1,24 @@
-#include "helper.h"
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#pragma once
+#include "filemanager.h"
+#include "renderer.h"
+#include "surface.h"
+#include "texture.h"
+#include "window.h"
 
 class Image
 {
 public:
   Image();
-  void cleanupResources();
-
-  SDL_Window *getWindow() const;
-  void        setWindow(SDL_Window *w);
-
-  SDL_Renderer *getRenderer() const;
-  void          setRenderer(SDL_Renderer *r);
-
-  SDL_Surface *getSurface() const;
-  void         setSurface(SDL_Surface *s);
-
-  SDL_Texture *getTexture() const;
-  void         setTexture(SDL_Texture *t);
+  ~Image();
+  Window   *getWindow() const;
+  Renderer *getRenderer() const;
+  Surface  *getSurface() const;
+  Texture  *getTexture() const;
 
 private:
-  SDL_Window   *m_window{nullptr};
-  SDL_Renderer *m_renderer{nullptr};
-  SDL_Surface  *m_surface{nullptr};
-  SDL_Texture  *m_texture{nullptr};
+  std::unique_ptr<Window>      m_window;
+  std::unique_ptr<Renderer>    m_renderer;
+  std::unique_ptr<Surface>     m_surface;
+  std::unique_ptr<Texture>     m_texture;
+  std::unique_ptr<FileManager> m_fileManager;
 };

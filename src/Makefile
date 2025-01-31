@@ -1,16 +1,29 @@
 CXX ?= clang++
 CXXFLAGS := \
-			-Og \
 			-Wall \
 			-Wextra \
-			-std=c++17 \
-			-lSDL2 \
-			-lSDL2_image \
-			-Wno-unused-command-line-argument
+			-std=c++17
 
-CFMT ?= clang-format
+LDFLAGS := \
+		   -lSDL2 \
+		   -lSDL2_image \
+		   -Wno-unused-command-line-argument
+
+CFMT := clang-format
 OUT := quick-pic
 OUT_DIR := build
+DEBUG ?= 0
+
+ifeq ($(DEBUG), 1)
+	CXXFLAGS += -ggdb \
+				-gdwarf-2 \
+				-DDEBUG \
+				-O0 \
+				-fstandalone-debug \
+				-fno-stack-protector
+else
+	CXXFLAGS += -DNDEBUG -Og
+endif
 
 SRCS := $(wildcard ./*.cpp)
 HPPS := $(wildcard ./*.hpp ./*.h)
@@ -25,8 +38,12 @@ main:
 	$(MAKE_DIR)
 	$(MAKE) compile
 
+debug:
+	$(MAKE_DIR)
+	$(MAKE) DEBUG=1 compile
+
 compile: $(OBJS)
-	$(CXX) $(OBJS) $(CXXFLAGS) -o ./../$(OUT)
+	$(CXX) $(OBJS) $(LDFLAGS) -o ./../$(OUT)
 
 format:
 	$(CFMT) -i $(SRCS) $(HPPS) $(HS)
@@ -37,4 +54,4 @@ install:
 clean:
 	rm -rf ./$(OUT_DIR) ./../$(OUT)
 
-.PHONY: main compile format install clean
+.PHONY: main debug compile format install clean

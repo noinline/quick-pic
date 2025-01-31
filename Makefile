@@ -6,6 +6,11 @@ main:
 	$(MAKE) -C src main
 	echo Done!
 
+debug:
+	echo Started compiling with Debug symbols...
+	$(MAKE) -C src debug
+	echo Done!
+
 format:
 	echo Executing clang-format...
 	$(MAKE) -C src format
@@ -21,4 +26,4 @@ clean:
 	$(MAKE) -C src clean
 	echo Done!
 
-.PHONY: main format install clean
+.PHONY: main debug format install clean
