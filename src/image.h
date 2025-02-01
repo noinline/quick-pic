@@ -9,11 +9,13 @@ class Image
 {
 public:
   Image();
+  Image(std::string image);
   ~Image();
-  Window   *getWindow() const;
-  Renderer *getRenderer() const;
-  Surface  *getSurface() const;
-  Texture  *getTexture() const;
+  Window      *getWindow() const;
+  Renderer    *getRenderer() const;
+  Surface     *getSurface() const;
+  Texture     *getTexture() const;
+  FileManager *getFileManager() const;
 
 private:
   std::unique_ptr<Window>      m_window;

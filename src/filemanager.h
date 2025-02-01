@@ -8,9 +8,10 @@
 class FileManager
 {
 public:
+  FileManager();
+  ~FileManager();
   std::string getHomeDirectory() const;
   std::string getRootDirectory() const;
-  bool        setRootDirectory(const std::string &dir);
 
 private:
   std::string m_rootDirectory{};
